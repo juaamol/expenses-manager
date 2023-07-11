@@ -1,7 +1,12 @@
-<script setup></script>
+<script setup>
+import Filters from './components/Filters.vue';
+</script>
 
 <template>
-  <h1>Template</h1>
+  <div>
+    <header>Expenses Manager</header>
+    <Filters />
+  </div>
 </template>
 
-<style scoped></style>
+<style></style>
