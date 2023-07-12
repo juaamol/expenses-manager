@@ -28,7 +28,6 @@ const expense = reactive({
 const defineBudget = (quantity) => {
   budget.value = quantity;
   available.value = quantity;
-  console.log(quantity);
 };
 
 const resetApp = () => {
@@ -56,7 +55,7 @@ watch(
   expenses,
   () => {
     const totalSpent = expenses.value.reduce(
-      (total, expense) => expense.cantidad + total,
+      (total, expense) => expense.quantity + total,
       0,
     );
     spent.value = totalSpent;
@@ -116,7 +115,7 @@ const saveExpense = () => {
 const reinitializeStateExpenses = () => {
   Object.assign(expense, {
     nombre: '',
-    cantidad: '',
+    quantity: '',
     category: '',
     id: null,
     fecha: Date.now(),
@@ -152,9 +151,9 @@ const filteredExpenses = computed(() => {
   <div :class="{ fix: modal.show }">
     <header>
       <h1>Expenses Manager</h1>
-
       <div class="container-header container shadow">
         <Budget v-if="budget === 0" @define-budget="defineBudget" />
+
         <BudgetControl
           v-else
           :budget="budget"

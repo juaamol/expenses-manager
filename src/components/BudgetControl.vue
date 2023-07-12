@@ -21,9 +21,9 @@ const props = defineProps({
   },
 });
 
-const percent = computed(() => {
-  return parseInt(((props.budget - props.available) / props.budget) * 100);
-});
+const percent = computed(() =>
+  parseInt(((props.budget - props.available) / props.budget) * 100),
+);
 </script>
 
 <template>
