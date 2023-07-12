@@ -90,7 +90,7 @@ const isEditing = computed(() => {
 <template>
   <div class="modal">
     <div class="close-modal">
-      <img :src="closeModal" opacity @click="$emit('hide-modal')" />
+      <img :src="closeModal" @click="$emit('hide-modal')" />
     </div>
     <div
       class="container container-form"
