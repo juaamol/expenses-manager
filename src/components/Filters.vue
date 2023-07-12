@@ -20,7 +20,7 @@ defineEmits(['update:filter']);
           <option value="expenses">Other expenses</option>
           <option value="entertainment">Entertainment</option>
           <option value="health">Health</option>
-          <option value="suscriptions">Suscriptions</option>
+          <option value="subscriptions">Subscriptions</option>
         </select>
       </div>
     </form>
