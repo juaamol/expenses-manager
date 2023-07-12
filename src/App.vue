@@ -1,10 +1,11 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { ref, reactive, watch, computed, onMounted } from 'vue';
 import Budget from './components/Budget.vue';
 import Filters from './components/Filters.vue';
 import Modal from './components/Modal.vue';
 import BudgetControl from './components/BudgetControl.vue';
 import iconNewExpense from './assets/img/new-expense.svg';
+import { generateId } from './helpers';
 
 const modal = reactive({
   show: false,
@@ -13,6 +14,7 @@ const modal = reactive({
 const budget = ref(0);
 const spent = ref(0);
 const available = ref(0);
+const filter = ref('');
 const expenses = ref([]);
 
 const expense = reactive({
@@ -36,9 +38,6 @@ const resetApp = () => {
   }
 };
 
-const saveExpense = () => {};
-const deleteExpense = () => {};
-
 const showModal = () => {
   modal.show = true;
   setTimeout(() => {
@@ -52,6 +51,101 @@ const hideModal = () => {
     modal.show = false;
   }, 300);
 };
+
+watch(
+  expenses,
+  () => {
+    const totalSpent = expenses.value.reduce(
+      (total, expense) => expense.cantidad + total,
+      0,
+    );
+    spent.value = totalSpent;
+    available.value = budget.value - totalSpent;
+    localStorage.setItem('expenses', JSON.stringify(expenses.value));
+  },
+  {
+    deep: true,
+  },
+);
+
+watch(
+  modal,
+  () => {
+    if (!modal.show) {
+      reinitializeStateExpenses();
+    }
+  },
+  {
+    deep: true,
+  },
+);
+
+watch(budget, () => {
+  localStorage.setItem('budget', budget.value);
+});
+
+onMounted(() => {
+  const budgetStorage = localStorage.getItem('budget');
+  if (budgetStorage) {
+    budget.value = Number(budgetStorage);
+    available.value = Number(budgetStorage);
+  }
+
+  const expensesStorage = localStorage.getItem('expenses');
+  if (expensesStorage) {
+    expenses.value = JSON.parse(expensesStorage);
+  }
+});
+
+const saveExpense = () => {
+  if (expense.id) {
+    const { id } = expense;
+    const i = expenses.value.findIndex((expense) => expense.id === id);
+    expenses.value[i] = { ...expense };
+  } else {
+    expenses.value.push({
+      ...expense,
+      id: generateId(),
+    });
+  }
+
+  ocultarModal();
+  reinitializeStateExpenses();
+};
+
+const reinitializeStateExpenses = () => {
+  Object.assign(expense, {
+    nombre: '',
+    cantidad: '',
+    category: '',
+    id: null,
+    fecha: Date.now(),
+  });
+};
+
+const selectExpense = (id) => {
+  const expenseEdit = expenses.value.filter((expense) => expense.id === id)[0];
+  Object.assign(expense, expenseEdit);
+  showModal();
+};
+
+const deleteExpense = () => {
+  if (confirm('Delete?')) {
+    expenses.value = expenses.value.filter(
+      (expenseState) => expenseState.id !== expense.id,
+    );
+    ocultarModal();
+  }
+};
+
+const filteredExpenses = computed(() => {
+  if (filter.value) {
+    return expenses.value.filter(
+      (expense) => expense.category === filter.value,
+    );
+  }
+  return expenses.value;
+});
 </script>
 
 <template>
