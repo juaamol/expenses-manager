@@ -232,7 +232,7 @@ const isEditing = computed(() => {
   width: 100%;
   background-color: #ef4444;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 2.2rem;
   color: var(--white);
   margin-top: 10rem;
   cursor: pointer;
