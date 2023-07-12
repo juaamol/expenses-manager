@@ -1,7 +1,10 @@
-# Vue 3 + Vite
+# Expenses Manager
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+![image](https://github.com/juaamol/expenses-manager/assets/50924448/f0f51f8a-eb9a-4728-abf2-2304ac41f221)
 
-## Recommended IDE Setup
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+App to manage your expenses
+
+## How to run
+
+`npm run dev`
