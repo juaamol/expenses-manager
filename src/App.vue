@@ -109,7 +109,7 @@ const saveExpense = () => {
     });
   }
 
-  ocultarModal();
+  hideModal();
   reinitializeStateExpenses();
 };
 
@@ -134,7 +134,7 @@ const deleteExpense = () => {
     expenses.value = expenses.value.filter(
       (expenseState) => expenseState.id !== expense.id,
     );
-    ocultarModal();
+    hideModal();
   }
 };
 
@@ -165,7 +165,7 @@ const filteredExpenses = computed(() => {
       </div>
     </header>
     <main v-if="budget > 0">
-      <Filters />
+      <Filters v-model:filter="filter" />
       <div class="create-expense">
         <img :src="iconNewExpense" alt="icon new expense" @click="showModal" />
       </div>
