@@ -6,6 +6,7 @@ import Modal from './components/Modal.vue';
 import BudgetControl from './components/BudgetControl.vue';
 import iconNewExpense from './assets/img/new-expense.svg';
 import { generateId } from './helpers';
+import Expense from './components/Expense.vue';
 
 const modal = reactive({
   show: false,
@@ -165,6 +166,19 @@ const filteredExpenses = computed(() => {
     </header>
     <main v-if="budget > 0">
       <Filters v-model:filter="filter" />
+      <div class="expenses-list container">
+        <h2>
+          {{
+            filteredExpenses.length > 0 ? 'Expenses' : 'There are no expenses'
+          }}
+        </h2>
+        <Expense
+          v-for="expense in filteredExpenses"
+          :key="expense.id"
+          :expense="expense"
+          @select-expense="selectExpense"
+        />
+      </div>
       <div class="create-expense">
         <img :src="iconNewExpense" alt="icon new expense" @click="showModal" />
       </div>
