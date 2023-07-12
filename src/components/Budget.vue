@@ -13,6 +13,8 @@ const defineBudget = () => {
     setTimeout(() => {
       error.value = '';
     }, 3000);
+  } else {
+    emit('define-budget', budget.value);
   }
 };
 </script>

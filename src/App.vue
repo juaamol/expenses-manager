@@ -1,5 +1,12 @@
 <script setup>
 import Budget from './components/Budget.vue';
+import { ref } from 'vue';
+
+const budget = ref(0);
+
+const defineBudget = (quantity) => {
+  budget.value = quantity;
+};
 </script>
 
 <template>
@@ -8,7 +15,7 @@ import Budget from './components/Budget.vue';
       <h1>Expenses Manager</h1>
 
       <div class="container-header container shadow">
-        <Budget />
+        <Budget v-if="budget === 0" @definir-budget="defineBudget" />
       </div>
     </header>
   </div>
